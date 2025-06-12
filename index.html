@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Recuperatorio Lenguajes 3</title>
+  <style>
+    .contenedor {
+      background: white;
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-top: 10px;
+      display: block;
+    }
+
+    .opciones label {
+      font-weight: normal;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    
+    }
+
+    #resultado {
+      margin-top: 15px;
+      font-size: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="contenedor">
+  <h2>Simulador de Costo de Boletos</h2>
+
+  <label for="origen">Origen:</label>
+  <input type="text" id="origen" value="SLA - Salta" readonly>
+
+  <label for="destino">Destino:</label>
+  <select id="destino">
+    <option value="COR">COR - Córdoba</option>
+    <option value="BUE">BUE - Buenos Aires</option>
+    <option value="MDZ">MDZ - Mendoza</option>
+  </select>
+
+  <label>Tipo de viaje:</label>
+  <label><input type="radio" name="tipoViaje" value="ida" checked> IDA</label>
+  <label><input type="radio" name="tipoViaje" value="ida_vuelta"> IDA/VUELTA</label>
+
+  <label for="fechaIda">Fecha Ida:</label>
+  <input type="date" id="fechaIda">
+
+  <label for="fechaVuelta">Fecha Vuelta:</label>
+  <input type="date" id="fechaVuelta">
+
+  <label for="pasajeros">Pasajeros:</label>
+  <input type="number" id="pasajeros" min="1" value="1">
+
+  <button onclick="calcularPrecio()">Simular Costo Boleto/s</button>
+
+  <label for="precio">Precio Total:</label>
+  <input type="text" id="precio" readonly>
+
+  <div id="resultado"></div>
+</div>
+
+<script>
+  function calcularPrecio() {
+    const destino = document.getElementById("destino").value;
+    const tipoViaje = document.querySelector('input[name="tipoViaje"]:checked').value;
+    const fechaIda = new Date(document.getElementById("fechaIda").value);
+    const fechaVuelta = new Date(document.getElementById("fechaVuelta").value);
+    const pasajeros = parseInt(document.getElementById("pasajeros").value);
+    const precio = document.getElementById("precio");
+    const resultado = document.getElementById("resultado");
+    resultado.textContent = "";
+
+    if ( fechaVuelta <= fechaIda) {
+      alert("LA FECHA DE IDA DEBE SER MENOR QUE LA DE VUELTA")
+    }
+
+    if (isNaN(pasajeros) || pasajeros < 1) {
+        alert("NUMERO DE PASAJEROS INVALIDO")
+    }
+
+    let precioBase = 0;
+    switch (destino) {
+      case "COR":
+        precioBase = 120000;
+        break;
+      case "MDZ":
+        precioBase = 210800;
+        break;
+      case "BUE":
+        precioBase = 135000;
+        break;
+    }
+
+    if (tipoViaje === "ida") {
+      precioBase /= 2;
+    }
+
+    const precioConIVA = precioBase * 1.21;
+    const total = Math.round(precioConIVA * pasajeros);
+    precio.value = "$" + total;
+  }
+</script>
+
+</body>
+</html>
