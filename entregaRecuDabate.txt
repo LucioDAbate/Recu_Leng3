@@ -1,5 +1,7 @@
-USUARIO DE GITHUB:
-LINK DE REPOSITORIO:
+USUARIO DE GITHUB: LucioDAbate
+LINK DE REPOSITORIO: https://github.com/LucioDAbate/Recu_Leng3.git
+DEPLOY: https://luciodabate.github.io/Recu_Leng3/
+
 
 CODIGO:
 <!DOCTYPE html>
